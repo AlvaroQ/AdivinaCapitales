@@ -163,7 +163,8 @@ class ResultFragment : Fragment() {
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setContentView(R.layout.dialog_save_record)
             btnSubmit.setSafeOnClickListener {
-                resultViewModel.saveTopScore(User(editTextWorldRecord.text.toString(), points))
+                val name = editTextWorldRecord.text.toString().ifEmpty { "Anonymous" }
+                resultViewModel.saveTopScore(User(name, points))
                 dismiss()
             }
             show()

@@ -7,7 +7,6 @@ apply plugin: 'com.google.firebase.crashlytics'// Added Firebase Crashlytics plu
 
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildtoolsVersion
 
     defaultConfig {
         applicationId names.applicationId

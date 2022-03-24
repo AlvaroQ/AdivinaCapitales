@@ -34,7 +34,7 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
             val ref = database
                 .collection(COLLECTION_RANKING)
                 .orderBy("points", Query.Direction.DESCENDING)
-                .limit(8)
+                .limit(20)
 
             ref.get()
                 .addOnSuccessListener {
