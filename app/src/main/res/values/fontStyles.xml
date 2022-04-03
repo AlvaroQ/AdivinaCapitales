@@ -104,4 +104,7 @@
     <style name="Bold.TextTitleColor.VeryVeryLarge" >
         <item name="android:textSize">@dimen/very_very_large</item>
     </style>
+    <style name="Bold.TextTitleColor.VeryLarge" >
+        <item name="android:textSize">@dimen/very_large</item>
+    </style>
 </resources>

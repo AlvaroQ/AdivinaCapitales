@@ -28,32 +28,87 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnStartByFlag"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="180dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        android:layout_height="80dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@+id/imageManuscript"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="24dp"
+        android:elevation="12dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_button_start">
 
-        <Button
-            android:id="@+id/btnStartByFlag"
-            android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/imageByFlag"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/image_flag"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/textByFlag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/by_flag"
+                android:gravity="center"
+                android:textAppearance="@style/Bold.TextTitleColor.VeryLarge"
+                android:fontFamily="@font/rock_salt_regular"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageByFlag"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnStartByCountry"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@+id/btnStartByFlag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="24dp"
+        android:elevation="12dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintWidth_percent=".45"
-            android:text="@string/by_flag"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-        <Button
-            android:id="@+id/btnStartByCountry"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintWidth_percent=".45"
-            android:text="@string/by_country"
-            app:icon="@drawable/ic_flag"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@drawable/gradient_button_start">
+
+            <ImageView
+                android:id="@+id/imageByCountry"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/image_country"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/textByCountry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/by_country"
+                android:gravity="center"
+                android:textAppearance="@style/Bold.TextTitleColor.VeryLarge"
+                android:fontFamily="@font/rock_salt_regular"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageByCountry"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

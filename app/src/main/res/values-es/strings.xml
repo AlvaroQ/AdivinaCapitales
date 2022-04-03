@@ -21,6 +21,8 @@
     <string name="not_exist">Not exist</string>
     <string name="by_flag">Por bandera</string>
     <string name="by_country">Por países</string>
+    <string name="settings">Ajustes</string>
+    <string name="learn">Aprender</string>
 
     <!-- content description image -->
     <string name="game_title">Título del juego</string>
