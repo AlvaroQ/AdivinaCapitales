@@ -12,6 +12,7 @@ import com.alvaroquintana.adivinacapitales.common.startActivity
 import com.alvaroquintana.adivinacapitales.databinding.SelectFragmentBinding
 import androidx.lifecycle.Observer
 import com.alvaroquintana.adivinacapitales.ui.game.GameActivity
+import com.alvaroquintana.adivinacapitales.ui.settings.SettingsActivity
 import com.alvaroquintana.adivinacapitales.utils.Constants
 import com.alvaroquintana.adivinacapitales.utils.setSafeOnClickListener
 import org.koin.android.scope.lifecycleScope
@@ -38,6 +39,11 @@ class SelectFragment : Fragment() {
         btnStartByCountry.setSafeOnClickListener {
             selectViewModel.navigateToGameByCountry()
         }
+
+        val btnSettings: CardView = root.findViewById(R.id.btnSettings)
+        btnSettings.setSafeOnClickListener {
+            selectViewModel.navigateToSettings()
+        }
         return root
     }
 
@@ -48,6 +54,7 @@ class SelectFragment : Fragment() {
 
     private fun navigate(navigation: SelectViewModel.Navigation?) {
         when (navigation) {
+            SelectViewModel.Navigation.Settings -> activity?.startActivity<SettingsActivity> { }
             SelectViewModel.Navigation.GameByFlag -> {
                 activity?.startActivity<GameActivity> { putExtra(Constants.TYPE_GAME, Constants.TypeGame.BY_FLAG) }
             }

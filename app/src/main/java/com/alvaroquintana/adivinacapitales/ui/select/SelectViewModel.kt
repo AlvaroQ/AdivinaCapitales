@@ -18,13 +18,17 @@ class SelectViewModel : ScopedViewModel() {
         _navigation.value = Navigation.GameByFlag
     }
 
-
     fun navigateToGameByCountry() {
         _navigation.value = Navigation.GameByCountry
+    }
+
+    fun navigateToSettings() {
+        _navigation.value = Navigation.Settings
     }
 
     sealed class Navigation {
         object GameByFlag : Navigation()
         object GameByCountry : Navigation()
+        object Settings : Navigation()
     }
 }

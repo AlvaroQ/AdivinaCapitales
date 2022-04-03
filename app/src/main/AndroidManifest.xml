@@ -37,6 +37,8 @@
             android:name=".ui.ranking.RankingActivity"
             android:noHistory="true"/>
 
+        <activity android:name=".ui.settings.SettingsActivity"/>
+
     </application>
 
 </manifest>
