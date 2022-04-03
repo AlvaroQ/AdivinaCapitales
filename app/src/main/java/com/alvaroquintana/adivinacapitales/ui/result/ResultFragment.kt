@@ -123,9 +123,9 @@ class ResultFragment : Fragment() {
 
     private fun openAppOnPlayStore(appPackageName: String) {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(appPackageName)))
         } catch (notFoundException: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
         }
     }
 
@@ -167,7 +167,7 @@ class ResultFragment : Fragment() {
             setContentView(R.layout.dialog_save_record)
             btnSubmit.setSafeOnClickListener {
                 val name = editTextWorldRecord.text.toString().ifEmpty { "Anonymous" }
-                resultViewModel.saveTopScore(User(name, points))
+                resultViewModel.saveTopScore(User(name, points, points.toInt()))
                 dismiss()
             }
             show()
