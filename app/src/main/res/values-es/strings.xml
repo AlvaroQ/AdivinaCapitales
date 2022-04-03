@@ -50,4 +50,8 @@
     <string name="best_score">Mejores puntuaciones</string>
     <string name="score_image_background">fondo de la clasificación</string>
     <string name="locale">es</string>
+
+    <!-- Info screen -->
+    <string name="info_title">Información</string>
+    <string name="region">Región: %s</string>
 </resources>

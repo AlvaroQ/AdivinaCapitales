@@ -12,6 +12,7 @@ import com.alvaroquintana.adivinacapitales.common.startActivity
 import com.alvaroquintana.adivinacapitales.databinding.SelectFragmentBinding
 import androidx.lifecycle.Observer
 import com.alvaroquintana.adivinacapitales.ui.game.GameActivity
+import com.alvaroquintana.adivinacapitales.ui.info.InfoActivity
 import com.alvaroquintana.adivinacapitales.ui.settings.SettingsActivity
 import com.alvaroquintana.adivinacapitales.utils.Constants
 import com.alvaroquintana.adivinacapitales.utils.setSafeOnClickListener
@@ -44,6 +45,11 @@ class SelectFragment : Fragment() {
         btnSettings.setSafeOnClickListener {
             selectViewModel.navigateToSettings()
         }
+
+        val btnLearn: CardView = root.findViewById(R.id.btnLearn)
+        btnLearn.setSafeOnClickListener {
+            selectViewModel.navigateToLearn()
+        }
         return root
     }
 
@@ -55,6 +61,7 @@ class SelectFragment : Fragment() {
     private fun navigate(navigation: SelectViewModel.Navigation?) {
         when (navigation) {
             SelectViewModel.Navigation.Settings -> activity?.startActivity<SettingsActivity> { }
+            SelectViewModel.Navigation.Learn -> activity?.startActivity<InfoActivity> { }
             SelectViewModel.Navigation.GameByFlag -> {
                 activity?.startActivity<GameActivity> { putExtra(Constants.TYPE_GAME, Constants.TypeGame.BY_FLAG) }
             }

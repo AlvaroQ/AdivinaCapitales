@@ -50,4 +50,16 @@
     <string name="game_image">image to guess</string>
     <string name="score_image_background">background</string>
     <string name="locale">en</string>
+
+    <!-- Info screen -->
+    <string name="info_title">Información</string>
+    <string name="region">Region: %s</string>
+    <string name="capital">Capital: %s</string>
+    <string name="currency">Moneda:</string>
+    <string name="language">Idiomas:</string>
+    <string name="currencies">%s (%s) \n</string>
+    <string name="languages">%s (%s) \n</string>
+    <string name="population">Población: %s habitantes</string>
+    <string name="area">Área: %s m²</string>
+    <string name="prefix">Prefijo: %s</string>
 </resources>

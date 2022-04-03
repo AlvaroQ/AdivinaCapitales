@@ -11,10 +11,12 @@ import com.alvaroquintana.adivinacapitales.ui.select.SelectFragment
 import com.alvaroquintana.adivinacapitales.ui.select.SelectViewModel
 import com.alvaroquintana.data.datasource.DataBaseSource
 import com.alvaroquintana.adivinacapitales.datasource.DataBaseSourceImpl
+import com.alvaroquintana.adivinacapitales.ui.info.InfoFragment
+import com.alvaroquintana.adivinacapitales.ui.info.InfoViewModel
 import com.alvaroquintana.adivinacapitales.ui.ranking.RankingFragment
 import com.alvaroquintana.adivinacapitales.ui.ranking.RankingViewModel
 import com.alvaroquintana.data.repository.AppsRecommendedRepository
-import com.alvaroquintana.data.repository.CountryByIdRepository
+import com.alvaroquintana.data.repository.CountryRepository
 import com.alvaroquintana.data.repository.RankingRepository
 import com.alvaroquintana.usecases.*
 import com.google.firebase.firestore.ktx.firestore
@@ -49,7 +51,7 @@ private val appModule = module {
 }
 
 val dataModule = module {
-    factory { CountryByIdRepository(get()) }
+    factory { CountryRepository(get()) }
     factory { AppsRecommendedRepository(get()) }
     factory { RankingRepository(get()) }
 }
@@ -71,5 +73,9 @@ private val scopesModule = module {
     scope(named<RankingFragment>()) {
         viewModel { RankingViewModel(get()) }
         scoped { GetRankingScore(get()) }
+    }
+    scope(named<InfoFragment>()) {
+        viewModel { InfoViewModel(get()) }
+        scoped { GetCountryList(get()) }
     }
 }

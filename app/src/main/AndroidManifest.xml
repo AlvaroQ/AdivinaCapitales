@@ -38,6 +38,7 @@
             android:noHistory="true"/>
 
         <activity android:name=".ui.settings.SettingsActivity"/>
+        <activity android:name=".ui.info.InfoActivity"/>
 
     </application>
 

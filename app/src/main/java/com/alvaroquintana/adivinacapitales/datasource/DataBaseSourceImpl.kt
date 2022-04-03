@@ -3,6 +3,7 @@ package com.alvaroquintana.adivinacapitales.datasource
 import com.alvaroquintana.adivinacapitales.BuildConfig
 import com.alvaroquintana.adivinacapitales.utils.Constants.PATH_REFERENCE_COUNTRIES
 import com.alvaroquintana.adivinacapitales.utils.Constants.PATH_REFERENCE_APPS
+import com.alvaroquintana.adivinacapitales.utils.Constants.TOTAL_ITEM_EACH_LOAD
 import com.alvaroquintana.data.datasource.DataBaseSource
 import com.alvaroquintana.domain.Country
 import com.alvaroquintana.adivinacapitales.utils.log
@@ -29,6 +30,33 @@ class DataBaseSourceImpl : DataBaseSource {
                     override fun onCancelled(error: DatabaseError) {
                         log("getCountryById FAILED", "Failed to read value.", error.toException())
                         continuation.resume(Country()){}
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(error.toException()))
+                    }
+                })
+        }
+    }
+
+    override suspend fun getCountryList(currentPage: Int): MutableList<Country> {
+        return suspendCancellableCoroutine { continuation ->
+            FirebaseDatabase.getInstance().getReference(PATH_REFERENCE_COUNTRIES)
+                .orderByKey()
+                .startAt((currentPage * TOTAL_ITEM_EACH_LOAD).toString())
+                .limitToFirst(TOTAL_ITEM_EACH_LOAD)
+                .addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val prideList = mutableListOf<Country>()
+                        if(dataSnapshot.hasChildren()) {
+                            for(snapshot in dataSnapshot.children) {
+                                prideList.add(snapshot.getValue(Country::class.java)!!)
+                            }
+                        }
+                        continuation.resume(prideList) {}
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        log("DataBaseBaseSourceImpl", "Failed to read value.", error.toException())
+                        continuation.resume(mutableListOf()){}
                         FirebaseCrashlytics.getInstance().recordException(Throwable(error.toException()))
                     }
                 })

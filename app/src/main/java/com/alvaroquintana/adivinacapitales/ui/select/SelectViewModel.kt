@@ -26,9 +26,14 @@ class SelectViewModel : ScopedViewModel() {
         _navigation.value = Navigation.Settings
     }
 
+    fun navigateToLearn() {
+        _navigation.value = Navigation.Learn
+    }
+
     sealed class Navigation {
         object GameByFlag : Navigation()
         object GameByCountry : Navigation()
         object Settings : Navigation()
+        object Learn : Navigation()
     }
 }
