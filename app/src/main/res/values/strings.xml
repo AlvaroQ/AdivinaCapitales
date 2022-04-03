@@ -52,14 +52,20 @@
     <string name="locale">en</string>
 
     <!-- Info screen -->
-    <string name="info_title">Información</string>
+    <string name="info_title">Information</string>
     <string name="region">Region: %s</string>
     <string name="capital">Capital: %s</string>
-    <string name="currency">Moneda:</string>
-    <string name="language">Idiomas:</string>
+    <string name="currency">Currency:</string>
+    <string name="language">Languages:</string>
     <string name="currencies">%s (%s) \n</string>
     <string name="languages">%s (%s) \n</string>
-    <string name="population">Población: %s habitantes</string>
-    <string name="area">Área: %s m²</string>
-    <string name="prefix">Prefijo: %s</string>
+    <string name="population">Poulation: %s hab</string>
+    <string name="area">Area: %s m²</string>
+    <string name="prefix">Prefix: %s</string>
+
+    <!-- Dialog screen extra life -->
+    <string name="dialog_extra_life_title">Extra life</string>
+    <string name="dialog_extra_life_description">Do you want an extra life watching an ad?</string>
+    <string name="dialog_extra_life_btn_yes">Yes</string>
+    <string name="dialog_extra_life_btn_no">No</string>
 </resources>

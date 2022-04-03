@@ -53,7 +53,7 @@ android {
             resValue 'string', 'BANNER_GAME', getAdmobBannerGameId()
             resValue 'string', 'BANNER_RANKING', getAdmobBannerRankingId()
             resValue 'string', 'BANNER_INFO', getAdmobBannerInfoId()
-            resValue 'string', 'BONIFICADO_GAME', getAdmobBonificadoGameOverId()
+            resValue 'string', 'BONIFICADO_GAME', getAdmobBonificadoGameId()
         }
     }
     compileOptions {
@@ -127,13 +127,13 @@ def getAdmobBannerRankingId() {
 def getAdmobBannerInfoId() {
     try {
         def stringsFile = file("./src/main/res/values/secrets.xml")
-        return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_banner_info' }.text()
+        return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_banner_ranking' }.text()
     } catch(e) {
         println(e)
         return ""
     }
 }
-def getAdmobBonificadoGameOverId() {
+def getAdmobBonificadoGameId() {
     try {
         def stringsFile = file("./src/main/res/values/secrets.xml")
         return new XmlParser().parse(stringsFile).string.find { it.@name.equals 'admob_bonificado_game' }.text()

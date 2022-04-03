@@ -25,9 +25,17 @@ class GameViewModel(private val getCountryById: GetCountryById) : ScopedViewMode
     private val _navigation = MutableLiveData<Navigation>()
     val navigation: LiveData<Navigation> = _navigation
 
+    private val _showingAds = MutableLiveData<UiModel>()
+    val showingAds: LiveData<UiModel> = _showingAds
+
     init {
         Analytics.analyticsScreenViewed(Analytics.SCREEN_GAME)
         generateNewStage()
+        _showingAds.value = UiModel.ShowBannerAd(true)
+    }
+
+    fun showRewardedAd() {
+        _showingAds.value = UiModel.ShowReewardAd(true)
     }
 
     fun generateNewStage() {
@@ -77,7 +85,7 @@ class GameViewModel(private val getCountryById: GetCountryById) : ScopedViewMode
         _navigation.value = Navigation.Result
     }
 
-    fun getCountry() : Country? {
+    fun getCountry() : Country {
         return country
     }
 
@@ -89,11 +97,18 @@ class GameViewModel(private val getCountryById: GetCountryById) : ScopedViewMode
         return numRandom
     }
 
+    fun navigateToExtraLifeDialog() {
+        _navigation.value = Navigation.ExtraLifeDialog
+    }
+
     sealed class UiModel {
         data class Loading(val show: Boolean) : UiModel()
+        data class ShowBannerAd(val show: Boolean) : UiModel()
+        data class ShowReewardAd(val show: Boolean) : UiModel()
     }
 
     sealed class Navigation {
         object Result : Navigation()
+        object ExtraLifeDialog : Navigation()
     }
 }
