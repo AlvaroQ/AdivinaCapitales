@@ -45,13 +45,13 @@ class DataBaseSourceImpl : DataBaseSource {
                 .addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val prideList = mutableListOf<Country>()
+                        val countryList = mutableListOf<Country>()
                         if(dataSnapshot.hasChildren()) {
                             for(snapshot in dataSnapshot.children) {
-                                prideList.add(snapshot.getValue(Country::class.java)!!)
+                                countryList.add(snapshot.getValue(Country::class.java)!!)
                             }
                         }
-                        continuation.resume(prideList) {}
+                        continuation.resume(countryList) {}
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -71,7 +71,7 @@ class DataBaseSourceImpl : DataBaseSource {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         var value = dataSnapshot.getValue<MutableList<App>>()
                         if(value == null) value = mutableListOf()
-                        continuation.resume(value.filter { it.url != BuildConfig.APPLICATION_ID }.toMutableList()){}
+                        continuation.resume(value.filter { !it.url!!.contains(BuildConfig.APPLICATION_ID) }.toMutableList()){}
                     }
 
                     override fun onCancelled(error: DatabaseError) {
