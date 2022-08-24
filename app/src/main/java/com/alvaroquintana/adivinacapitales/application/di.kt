@@ -17,6 +17,7 @@ import com.alvaroquintana.adivinacapitales.ui.ranking.RankingFragment
 import com.alvaroquintana.adivinacapitales.ui.ranking.RankingViewModel
 import com.alvaroquintana.data.repository.AppsRecommendedRepository
 import com.alvaroquintana.data.repository.CountryRepository
+import com.alvaroquintana.data.repository.IntegrityRepository
 import com.alvaroquintana.data.repository.RankingRepository
 import com.alvaroquintana.usecases.*
 import com.google.firebase.firestore.ktx.firestore
@@ -54,11 +55,13 @@ val dataModule = module {
     factory { CountryRepository(get()) }
     factory { AppsRecommendedRepository(get()) }
     factory { RankingRepository(get()) }
+    factory { IntegrityRepository(get()) }
 }
 
 private val scopesModule = module {
     scope(named<SelectFragment>()) {
-        viewModel { SelectViewModel() }
+        viewModel { SelectViewModel(get()) }
+        scoped { SaveIntegrity(get()) }
     }
     scope(named<GameFragment>()) {
         viewModel { GameViewModel(get()) }

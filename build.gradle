@@ -15,8 +15,8 @@ buildscript {
             'compileSdk'            : 30,
             'minSdk'                : 23,
             'targetSdk'             : 30,
-            'name'                  : '1.0.4',
-            'code'                  : 5,
+            'name'                  : '1.0.5',
+            'code'                  : 6,
             'buildtoolsVersion'     : '30.0.2',
     ]
     ext.libsversions = [
@@ -73,7 +73,13 @@ buildscript {
                 crashlytics         : "com.google.firebase:firebase-crashlytics:17.0.0",
 
                 // Admod
-                admob               : 'com.google.android.gms:play-services-ads:19.4.0'
+                admob               : 'com.google.android.gms:play-services-ads:19.4.0',
+
+                // integrity
+                integrity           : 'com.google.apis:google-api-services-playintegrity:v1-rev20220211-1.32.1',
+                playServices        : 'com.google.android.gms:play-services-auth:20.2.0',
+
+                oauth2              : 'com.google.auth:google-auth-library-oauth2-http:0.12.0'
         ]
 
         detektPlugin = [
