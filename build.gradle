@@ -12,11 +12,11 @@ buildscript {
             'applicationId': "com.alvaroquintana.adivinacapitales"
     ]
     ext.versions = [
-            'compileSdk'            : 30,
+            'compileSdk'            : 31,
             'minSdk'                : 23,
-            'targetSdk'             : 30,
+            'targetSdk'             : 31,
             'name'                  : '1.0.6',
-            'code'                  : 7,
+            'code'                  : 8,
             'buildtoolsVersion'     : '30.0.2',
     ]
     ext.libsversions = [
