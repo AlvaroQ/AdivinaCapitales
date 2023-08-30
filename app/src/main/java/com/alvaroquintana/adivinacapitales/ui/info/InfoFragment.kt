@@ -9,23 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import org.koin.android.scope.lifecycleScope
-import org.koin.android.viewmodel.scope.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alvaroquintana.adivinacapitales.common.startActivity
-import com.alvaroquintana.adivinacapitales.ui.info.InfoActivity
 import com.alvaroquintana.adivinacapitales.databinding.InfoFragmentBinding
 import com.alvaroquintana.adivinacapitales.ui.select.SelectActivity
 import com.alvaroquintana.adivinacapitales.utils.Constants.TOTAL_COUNTRIES
 import com.alvaroquintana.adivinacapitales.utils.Constants.TOTAL_ITEM_EACH_LOAD
 import com.alvaroquintana.adivinacapitales.utils.glideLoadingGif
 import com.alvaroquintana.domain.Country
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class InfoFragment : Fragment() {
     private lateinit var binding: InfoFragmentBinding
-    private val infoViewModel: InfoViewModel by lifecycleScope.viewModel(this)
+    private val infoViewModel: InfoViewModel by viewModel()
     private var currentPage = 0
     private lateinit var scrollListener: RecyclerView.OnScrollListener
     lateinit var adapter: InfoListAdapter
@@ -54,7 +52,7 @@ class InfoFragment : Fragment() {
     private fun loadAdAndProgress(model: InfoViewModel.UiModel) {
         when(model) {
             is InfoViewModel.UiModel.ShowAd -> {
-                (activity as InfoActivity).showAd()
+                (activity as InfoActivity).showAd(model.show)
             }
             is InfoViewModel.UiModel.ShowReewardAd -> {
                 (activity as InfoActivity).showRewardedAd(model.show)

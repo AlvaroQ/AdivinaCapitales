@@ -18,4 +18,4 @@ app/google-services.json
 app/release/app-release.aab
 app/src/main/res/values/secrets.xml
 firma/
-assets/country-f6ae1-export.json
+assets/*

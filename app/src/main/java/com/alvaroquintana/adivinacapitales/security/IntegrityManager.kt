@@ -26,7 +26,7 @@ import javax.crypto.spec.SecretKeySpec
 class IntegrityManager(private val context: Context, private val viewModel: SelectViewModel) {
 
     fun integrityToken() {
-        var payload = ""
+        var payload: String
 
         // Receive the nonce from the secure server.
         val nonce: String = Base64.encodeToString("this_is_my_nonce".toByteArray(), Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING)
@@ -99,18 +99,14 @@ class IntegrityManager(private val context: Context, private val viewModel: Sele
             val appIntegrity = JSONObject(payload).getJSONObject("appIntegrity")
             val appRecognitionVerdict = appIntegrity.getString("appRecognitionVerdict")
             if (appRecognitionVerdict.equals("PLAY_RECOGNIZED", ignoreCase = true)) {
-                Toast.makeText(
-                    context,
-                    "appRecognitionVerdict = PLAY_RECOGNIZED",
-                    Toast.LENGTH_LONG
-                ).show()
+                Log.d("checkAppIntegrity", "appRecognitionVerdict = PLAY_RECOGNIZED")
             }
 
             // "appLicensingVerdict": "LICENSED"
             val accountDetails = JSONObject(payload).getJSONObject("accountDetails")
             val appLicensingVerdict = accountDetails.getString("appLicensingVerdict")
             if (appLicensingVerdict.equals("LICENSED", ignoreCase = true)) {
-                Toast.makeText(context, "appLicensingVerdict = LICENSED", Toast.LENGTH_LONG).show()
+                Log.d("checkAppIntegrity","appLicensingVerdict = LICENSED")
             }
         } catch (exception: JSONException) {
             Log.d("SelectFragment", exception.message.toString())

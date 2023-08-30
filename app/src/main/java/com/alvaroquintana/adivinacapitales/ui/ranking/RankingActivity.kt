@@ -4,24 +4,26 @@ import android.os.Bundle
 import android.view.View
 import com.alvaroquintana.adivinacapitales.R
 import com.alvaroquintana.adivinacapitales.base.BaseActivity
+import com.alvaroquintana.adivinacapitales.common.viewBinding
+import com.alvaroquintana.adivinacapitales.databinding.RankingActivityBinding
 import com.alvaroquintana.adivinacapitales.utils.setSafeOnClickListener
-import kotlinx.android.synthetic.main.app_bar_layout.*
 
 class RankingActivity : BaseActivity() {
+    private val binding by viewBinding(RankingActivityBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.result_activity)
+        setContentView(binding.root)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.containerResult, RankingFragment.newInstance())
                 .commitNow()
         }
 
-        btnBack.setSafeOnClickListener {
+        binding.appBar.btnBack.setSafeOnClickListener {
             finish()
         }
-        toolbarTitle.text = getString(R.string.ranking_screen_title)
-        layoutLife.visibility = View.GONE
+        binding.appBar.toolbarTitle.text = getString(R.string.ranking_screen_title)
+        binding.appBar.layoutLife.visibility = View.GONE
     }
 }

@@ -97,9 +97,9 @@ class GameViewModel(private val getCountryById: GetCountryById) : ScopedViewMode
         return numRandom
     }
 
-    fun navigateToExtraLifeDialog() {
-        _navigation.value = Navigation.ExtraLifeDialog
-    }
+//    fun navigateToExtraLifeDialog() {
+//        _navigation.value = Navigation.ExtraLifeDialog
+//    }
 
     sealed class UiModel {
         data class Loading(val show: Boolean) : UiModel()
@@ -109,6 +109,6 @@ class GameViewModel(private val getCountryById: GetCountryById) : ScopedViewMode
 
     sealed class Navigation {
         object Result : Navigation()
-        object ExtraLifeDialog : Navigation()
+//        object ExtraLifeDialog : Navigation()
     }
 }

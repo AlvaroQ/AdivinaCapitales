@@ -1,14 +1,10 @@
 package com.alvaroquintana.adivinacapitales.ui.game
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -29,30 +25,28 @@ import com.alvaroquintana.adivinacapitales.utils.glideLoadBase64
 import com.alvaroquintana.adivinacapitales.utils.glideLoadingGif
 import com.alvaroquintana.adivinacapitales.utils.setSafeOnClickListener
 import com.alvaroquintana.domain.Country
-import kotlinx.android.synthetic.main.dialog_extra_life.*
 import kotlinx.coroutines.*
-import org.koin.android.scope.lifecycleScope
-import org.koin.android.viewmodel.scope.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class GameFragment : Fragment() {
-    private val gameViewModel: GameViewModel by lifecycleScope.viewModel(this)
+    private val gameViewModel: GameViewModel by viewModel()
     private lateinit var binding: GameFragmentBinding
 
-    lateinit var imageLoading: ImageView
-    lateinit var imageQuiz: ImageView
-    lateinit var textQuiz: TextView
-    lateinit var btnOptionOne: TextView
-    lateinit var btnOptionTwo: TextView
-    lateinit var btnOptionThree: TextView
-    lateinit var btnOptionFour: TextView
+    private lateinit var imageLoading: ImageView
+    private lateinit var imageQuiz: ImageView
+    private lateinit var textQuiz: TextView
+    private lateinit var btnOptionOne: TextView
+    private lateinit var btnOptionTwo: TextView
+    private lateinit var btnOptionThree: TextView
+    private lateinit var btnOptionFour: TextView
 
     private var life: Int = 3
     private var stage: Int = 1
     private var points: Int = 0
-    lateinit var typeGame: Enum<TypeGame>
+    private lateinit var typeGame: Enum<TypeGame>
     private var extraLife = false
 
     companion object {
@@ -62,8 +56,7 @@ class GameFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        savedInstanceState: Bundle?): View {
 
         binding = GameFragmentBinding.inflate(inflater)
         val root = binding.root
@@ -109,34 +102,35 @@ class GameFragment : Fragment() {
         gameViewModel.progress.observe(viewLifecycleOwner, Observer(::loadAdAndProgress))
     }
 
-    private fun navigate(navigation: GameViewModel.Navigation?) {
+    private fun navigate(navigation: GameViewModel.Navigation) {
         when (navigation) {
             is GameViewModel.Navigation.Result -> {
                 activity?.startActivity<ResultActivity> { putExtra(POINTS, points) }
             }
-            is GameViewModel.Navigation.ExtraLifeDialog -> {
-                showExtraLifeDialog()
-            }
+//            is GameViewModel.Navigation.ExtraLifeDialog -> {
+//                showExtraLifeDialog()
+//            }
         }
-    }
+    }/*
 
     private fun showExtraLifeDialog() {
         Dialog(requireContext()).apply {
+            val binding = DialogExtraLifeBinding.inflate(layoutInflater)
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setContentView(R.layout.dialog_extra_life)
-            btnNo.setSafeOnClickListener {
+            setContentView(binding.root)
+            binding.btnNo.setSafeOnClickListener {
                 dismiss()
                 gameViewModel.navigateToResult(points.toString())
             }
-            btnYes.setSafeOnClickListener {
+            binding.btnYes.setSafeOnClickListener {
                 dismiss()
                 gameViewModel.showRewardedAd()
                 addExtraLife()
             }
             show()
         }
-    }
+    }*/
 
     private fun addExtraLife() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -149,7 +143,7 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun loadAdAndProgress(model: GameViewModel.UiModel?) {
+    private fun loadAdAndProgress(model: GameViewModel.UiModel) {
         when(model) {
             is GameViewModel.UiModel.ShowBannerAd -> {
                 (activity as GameActivity).showBannerAd(model.show)
@@ -358,14 +352,11 @@ class GameFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             delay(TimeUnit.MILLISECONDS.toMillis(1000))
             withContext(Dispatchers.Main) {
-                if(life < 1 && !extraLife && stage < TOTAL_COUNTRIES) {
-                    extraLife = true
-                    gameViewModel.navigateToExtraLifeDialog()
-                } else if(stage > (TOTAL_COUNTRIES + 1) || life < 1) {
+                if(stage > (TOTAL_COUNTRIES + 1) || life < 1) {
                     gameViewModel.navigateToResult(points.toString())
                 } else {
                     gameViewModel.generateNewStage()
-                    if(stage != 0 && stage % 10 == 0) gameViewModel.showRewardedAd()
+                    if(stage != 0 && stage % 6 == 0) gameViewModel.showRewardedAd()
                 }
             }
         }

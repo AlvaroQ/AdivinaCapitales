@@ -1,6 +1,5 @@
 package com.alvaroquintana.adivinacapitales.ui.ranking
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView

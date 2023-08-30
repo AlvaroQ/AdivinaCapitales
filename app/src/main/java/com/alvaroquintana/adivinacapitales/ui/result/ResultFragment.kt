@@ -19,24 +19,21 @@ import androidx.preference.PreferenceManager
 import com.alvaroquintana.adivinacapitales.BuildConfig
 import com.alvaroquintana.adivinacapitales.R
 import com.alvaroquintana.adivinacapitales.common.startActivity
+import com.alvaroquintana.adivinacapitales.databinding.DialogSaveRecordBinding
 import com.alvaroquintana.adivinacapitales.databinding.ResultFragmentBinding
-import com.alvaroquintana.adivinacapitales.ui.game.GameActivity
 import com.alvaroquintana.adivinacapitales.ui.ranking.RankingActivity
-import com.alvaroquintana.adivinacapitales.ui.select.SelectActivity
 import com.alvaroquintana.adivinacapitales.utils.Constants.POINTS
 import com.alvaroquintana.adivinacapitales.utils.glideLoadingGif
 import com.alvaroquintana.adivinacapitales.utils.log
 import com.alvaroquintana.adivinacapitales.utils.setSafeOnClickListener
 import com.alvaroquintana.domain.App
 import com.alvaroquintana.domain.User
-import kotlinx.android.synthetic.main.dialog_save_record.*
-import org.koin.android.scope.lifecycleScope
-import org.koin.android.viewmodel.scope.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ResultFragment : Fragment() {
     private lateinit var binding: ResultFragmentBinding
-    private val resultViewModel: ResultViewModel by lifecycleScope.viewModel(this)
+    private val resultViewModel: ResultViewModel by viewModel()
     private var gamePoints = 0
 
     companion object {
@@ -110,7 +107,7 @@ class ResultFragment : Fragment() {
         }
     }
 
-    private fun navigate(navigation: ResultViewModel.Navigation?) {
+    private fun navigate(navigation: ResultViewModel.Navigation) {
         when (navigation) {
             ResultViewModel.Navigation.Rate -> rateApp()
             ResultViewModel.Navigation.Game -> activity?.finishAfterTransition()
@@ -162,11 +159,12 @@ class ResultFragment : Fragment() {
 
     private fun showEnterNameDialog(points: String) {
         Dialog(requireContext()).apply {
+            val binding = DialogSaveRecordBinding.inflate(layoutInflater)
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setContentView(R.layout.dialog_save_record)
-            btnSubmit.setSafeOnClickListener {
-                val name = editTextWorldRecord.text.toString().ifEmpty { "Anonymous" }
+            setContentView(binding.root)
+            binding.btnSubmit.setSafeOnClickListener {
+                val name = binding.editTextWorldRecord.text.toString().ifEmpty { "Anonymous" }
                 resultViewModel.saveTopScore(User(name, points, points.toInt()))
                 dismiss()
             }

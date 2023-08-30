@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'// Added Firebase Crashlytics plugin.
@@ -55,17 +54,6 @@ android {
             resValue 'string', 'BANNER_INFO', getAdmobBannerInfoId()
             resValue 'string', 'BONIFICADO_GAME', getAdmobBonificadoGameId()
         }
-        packagingOptions {
-            exclude 'META-INF/DEPENDENCIES'
-            exclude 'META-INF/LICENSE'
-            exclude 'META-INF/LICENSE.txt'
-            exclude 'META-INF/license.txt'
-            exclude 'META-INF/NOTICE'
-            exclude 'META-INF/NOTICE.txt'
-            exclude 'META-INF/notice.txt'
-            exclude 'META-INF/ASL2.0'
-            exclude("META-INF/*.kotlin_module")
-        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -84,20 +72,20 @@ dependencies {
     implementation project(":domain")
     implementation project(":usecases")
 
-    implementation androidLibs.values()
-    implementation androidKtxLibs.values()
-    implementation kotlinLibs.values()
-    implementation libs.values()
-    implementation androidKaptLibs.values()
+    implementation "io.insert-koin:koin-android:${libsversions.koin_version}"
+    implementation "com.google.android.gms:play-services-ads:21.5.0"
     implementation 'com.google.android.play:integrity:1.0.1'
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
+
+    implementation androidLibs.values()
+    implementation androidKtxLibs.values()
+    implementation firebaseLibs.values()
+    implementation kotlinLibs.values()
+    implementation libs.values()
 
 // https://mvnrepository.com/artifact/org.bitbucket.b_c/jose4j
     implementation group: 'org.bitbucket.b_c', name: 'jose4j', version: '0.7.12'
 
-    testImplementation testLibs.values()
-    testImplementation androidxTestLibs.values()
-    androidTestImplementation androidTestLibs.values()
 
 }
 
@@ -157,4 +145,7 @@ def getAdmobBonificadoGameId() {
         println(e)
         return ""
     }
+}
+configurations.configureEach {
+    exclude group: 'com.google.android.gms', module: 'play-services-safetynet'
 }
