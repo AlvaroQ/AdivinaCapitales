@@ -60,7 +60,7 @@ class FirestoreDataSourceImpl(private val database: FirebaseFirestore) : Firesto
 
             ref.get()
                 .addOnSuccessListener {
-                    continuation.resume(it.toObjects<User>().last().score.toString()){}
+                    continuation.resume(it.toObjects<User>().lastOrNull()?.score?.toString() ?: "") {}
                 }
                 .addOnFailureListener {
                     continuation.resume(""){}

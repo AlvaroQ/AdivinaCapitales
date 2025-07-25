@@ -51,3 +51,9 @@
 # Crashlitics
 -keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
 -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+
+-keepclassmembers class com.google.firebase.database.GenericTypeIndicator { *; }
+-keep class * extends com.google.firebase.database.GenericTypeIndicator { *; }
+-keepclassmembers class * {
+    public <init>(...);
+}

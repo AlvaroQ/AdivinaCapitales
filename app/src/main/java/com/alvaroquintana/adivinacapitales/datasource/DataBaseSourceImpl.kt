@@ -15,6 +15,9 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.suspendCancellableCoroutine
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.database.GenericTypeIndicator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlin.coroutines.resume
 
 class DataBaseSourceImpl : DataBaseSource {
 
@@ -63,23 +66,40 @@ class DataBaseSourceImpl : DataBaseSource {
         }
     }
 
-    override suspend fun getAppsRecommended(): MutableList<App> {
-        return suspendCancellableCoroutine { continuation ->
-            FirebaseDatabase.getInstance().getReference(PATH_REFERENCE_APPS)
-                .addValueEventListener(object : ValueEventListener {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override suspend fun getAppsRecommended(): MutableList<App> =
+        suspendCancellableCoroutine { continuation ->
+            val ref = FirebaseDatabase.getInstance().getReference(PATH_REFERENCE_APPS)
 
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        var value = dataSnapshot.getValue<MutableList<App>>()
-                        if(value == null) value = mutableListOf()
-                        continuation.resume(value.filter { !it.url!!.contains(BuildConfig.APPLICATION_ID) }.toMutableList()){}
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    try {
+                        val appList = mutableListOf<App>()
+                        if (dataSnapshot.hasChildren()) {
+                            for (snapshot in dataSnapshot.children) {
+                                val app = snapshot.getValue(App::class.java)
+                                if (app != null) {
+                                    appList.add(app)
+                                }
+                            }
+                        }
+                        continuation.resume(appList)
+                    } catch (e: Exception) {
+                        continuation.resumeWith(Result.failure(e))
                     }
+                }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        log("DataBaseBaseSourceImpl", "Failed to read value.", error.toException())
-                        continuation.resume(mutableListOf()){}
-                        FirebaseCrashlytics.getInstance().recordException(Throwable(error.toException()))
-                    }
-                })
+                override fun onCancelled(error: DatabaseError) {
+                    log("DataBaseBaseSourceImpl", "Failed to read value.", error.toException())
+                    FirebaseCrashlytics.getInstance().recordException(error.toException())
+                    continuation.resume(mutableListOf()) {}
+                }
+            }
+
+            ref.addListenerForSingleValueEvent(listener)
+
+            continuation.invokeOnCancellation {
+                ref.removeEventListener(listener)
+            }
         }
-    }
 }
